@@ -1,42 +1,8 @@
-# Nuxt 3 Minimal Starter
+# Twinkl - make a wish
 
-Look at the [nuxt 3 documentation](https://v3.nuxtjs.org) to learn more.
+## Routes
 
-## Setup
-
-Make sure to install the dependencies:
-
-```bash
-# yarn
-yarn install
-
-# npm
-npm install
-
-# pnpm
-pnpm install --shamefully-hoist
-```
-
-## Development Server
-
-Start the development server on http://localhost:3000
-
-```bash
-npm run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-npm run build
-```
-
-Locally preview production build:
-
-```bash
-npm run preview
-```
-
-Checkout the [deployment documentation](https://v3.nuxtjs.org/guide/deploy/presets) for more information.
+* / - the home page, landing page, call to action
+* /[twinkl-id] - the specific wish list for a given twinkl id
+* /[twinkl-id]/mine - **my** wishlist. Where a signed in user can update their wishes
+* /[twinkl-id]/constellation - People you follow and their wishlists
