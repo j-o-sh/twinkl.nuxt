@@ -10,15 +10,7 @@ export default { name: 'mine-page' }
   </header>
 
   <aside>
-    <!-- this only exists when logged in -->
-    <nav>
-      <ul>
-        <li><nuxt-link to="/1234">Preview</nuxt-link></li>
-        <li>My Twinkl</li>
-        <li><nuxt-link to="/1234/constellation">My Constellation</nuxt-link></li>
-        <li><nuxt-link to="/">Log Out</nuxt-link></li>
-      </ul>
-    </nav>
+    <twinkl-menu />
   </aside>
 
   <main>

@@ -13,15 +13,7 @@ export default { name: 'constellation-page' }
   </header>
 
   <aside>
-    <!-- this only exists when logged in -->
-    <nav>
-      <ul>
-        <li><nuxt-link to="/1234">Preview</nuxt-link></li>
-        <li><nuxt-link to="/1234/mine">My Twinkl</nuxt-link></li>
-        <li>My Constellation</li>
-        <li><nuxt-link to="/">Log Out</nuxt-link></li>
-      </ul>
-    </nav>
+    <twinkl-menu />
   </aside>
 
   <main>

@@ -10,15 +10,7 @@ export default { name: 'wishlist-page' }
   </header>
 
   <aside>
-    <!-- this only exists when logged in -->
-    <nav>
-      <ul>
-        <li>John's Twinkl</li>
-        <li><nuxt-link to="/1234/mine">My Twinkl</nuxt-link></li>
-        <li><nuxt-link to="/1234/constellation">My Constellation</nuxt-link></li>
-        <li><nuxt-link to="/">Log Out</nuxt-link></li>
-      </ul>
-    </nav>
+    <twinkl-menu />
   </aside>
 
   <main>
