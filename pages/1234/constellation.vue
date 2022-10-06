@@ -7,9 +7,6 @@ export default { name: 'constellation-page' }
   <header>
     <h1>My Twinkl Constellation</h1>
     <p class="subtitle">The twinkls I watch.</p>
-    <nav>
-      <nuxt-link to="/">Log Out</nuxt-link>
-    </nav>
   </header>
 
   <aside>
