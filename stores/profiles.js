@@ -3,7 +3,14 @@ import { defineStore } from 'pinia'
 export default defineStore('profiles', {
   state: () => ({
     active: undefined,
-    profiles: []
+    profiles: [
+      // TODO initial state for fast development. REMOVE!
+      { name: 'john' },
+      { name: 'jane' },
+      { name: 'josh' },
+      { name: 'jimmy' },
+      { name: 'james' }
+    ]
   }),
 
   getters: {
@@ -16,6 +23,7 @@ export default defineStore('profiles', {
     },
 
     create (profile) {
+      console.log('creating profile:', profile)
       this.profiles.push(profile)
     },
 
