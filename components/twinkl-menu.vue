@@ -1,43 +1,20 @@
 <script setup>
-import { useRouter, useRoute } from 'vue-router'
+import { computed, ref } from 'vue'
+import { useRouter } from 'vue-router'
 import useProfiles from '~/stores/profiles'
+import usePaths from '../composables/usePaths'
 
 const router = useRouter()
-const route = useRoute()
 const profiles = useProfiles()
+const paths = usePaths()
+
+const currentProfile = computed(() => profiles.find(paths.currentId.value))
+const onWishlist = ref(paths.currentIsWishlist)
+const onHome = ref(paths.currentIsHome)
 
 function logout () {
-  profiles.deactivateProfile()
-  router.push('/')
-}
-
-function currentProfile () {
-  const match = route.path.match(/^\/(\w+)\/?$/)
-  return match && profiles.find(match[1])
-}
-
-// TODO investigate: useRefs seems to fail on newly created profiles.
-// Maybe because the proxy needs to shift from undefined to a value?
-function activeProfile () {
-  return profiles.active
-}
-
-function onWishlistRoute () {
-  return !!currentProfile()
-}
-
-function onMyTwinkl () {
-  const match = route.path.match(/^\/(\w+)\/mine\/?$/)
-  return match && profiles.active &&
-    match[1].toLowerCase() === profiles.active.name.toLowerCase()
-}
-
-function myLink (subpath = '') {
-  return profiles.active && `/${profiles.active.name}/${subpath}`
-}
-
-function currentProfileName () {
-  return currentProfile()?.name.replace(/^(\w)/, l => l.toUpperCase())
+  profiles.logout()
+  router.push(paths.root.value)
 }
 </script>
 
@@ -47,17 +24,20 @@ function currentProfileName () {
   option will render, not as 'Log Out' but as 'Twinkl Home'
 -->
 <nav>
+  <div style="border: 1px dashed">
+    current: {{paths}}
+  </div>
   <ul>
     <!-- Only when on John's Twinkl -->
-    <li v-if="onWishlistRoute()">{{ currentProfileName() }}'s Twinkl</li>
+    <li v-if="onWishlist">{{ currentProfile?.name }}'s Twinkl</li>
     <!-- Only when on 'My Twinkl' -->
-    <li v-if="onMyTwinkl()"><nuxt-link :to="myLink()">Preview</nuxt-link></li>
-    <ui-vdiv v-if="activeProfile()">
-      <li><nuxt-link :to="myLink('mine')">My Twinkl</nuxt-link></li>
-      <li><nuxt-link :to="myLink('constellation')">My Constellation</nuxt-link></li>
+    <li v-if="onHome"><nuxt-link :to="paths.wishlist">Preview</nuxt-link></li>
+    <ui-vdiv v-if="profiles.loggedIn">
+      <li><nuxt-link :to="paths.home">My Twinkl</nuxt-link></li>
+      <li><nuxt-link :to="paths.constellation">My Constellation</nuxt-link></li>
       <li><button @click="logout">Log Out!</button></li>
     </ui-vdiv>
-    <li v-else><nuxt-link to="/">Get Started!</nuxt-link></li>
+    <li v-else><nuxt-link :to="paths.root">Get Started!</nuxt-link></li>
   </ul>
 </nav>
 </template>

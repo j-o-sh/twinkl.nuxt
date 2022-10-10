@@ -2,24 +2,24 @@ import { defineStore } from 'pinia'
 
 export default defineStore('profiles', {
   state: () => ({
-    active: undefined,
+    loggedIn: '',
     profiles: [
       // TODO initial state for fast development. REMOVE!
-      { name: 'john' },
-      { name: 'jane' },
-      { name: 'josh' },
-      { name: 'jimmy' },
-      { name: 'james' }
+      { name: 'John', id: 'john' },
+      { name: 'Jane', id: 'jane' },
+      { name: 'Josh', id: 'josh' },
+      { name: 'Jimmy', id: 'jimmy' },
+      { name: 'Jåmes', id: 'james' }
     ]
   }),
 
   getters: {
-    find: state => name => [...state.profiles].find(x => x.name === name)
+    find: state => id => [...state.profiles].find(x => x.id === id)
   },
 
   actions: {
-    activate (name) {
-      this.active = this.find(name)
+    login (id) {
+      this.loggedIn = id
     },
 
     create (profile) {
@@ -27,8 +27,8 @@ export default defineStore('profiles', {
       this.profiles.push(profile)
     },
 
-    deactivateProfile () {
-      this.active = undefined
+    logout () {
+      this.loggedIn = ''
     }
   }
 })

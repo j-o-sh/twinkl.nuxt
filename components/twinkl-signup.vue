@@ -1,25 +1,30 @@
 <script setup>
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import useProfiles from '~/stores/profiles'
+import usePaths from '../composables/usePaths'
 
 const router = useRouter()
 const profiles = useProfiles()
-const myTwinkl = () => profiles.active && `/${profiles.active.name}/mine`
+const paths = usePaths()
+
+const loggedIn = ref(profiles.loggedIn)
 
 function signup ({ target }) {
   const name = new FormData(target).get('name')
-  console.log(`signing up as ${name}.`)
-  if (!profiles.find(name)) {
+  const id = name.toLowerCase()
+  console.log(`signing up as ${name} (${id}).`)
+  if (!profiles.find(id)) {
     console.log('Creating profile...')
-    profiles.create({ name })
+    profiles.create({ id, name })
   }
-  profiles.activate(name)
-  router.push(myTwinkl())
+  profiles.login(id)
+  router.push(paths.homeOf(id))
 }
 </script>
 
 <template>
-  <router-link :to="myTwinkl()" v-if="profiles.active">Go to my Twinl</router-link>
+  <router-link :to="paths.home" v-if="loggedIn">Go to my Twinl</router-link>
   <details v-else>
     <summary>Get Started!</summary>
     <form @submit.prevent="signup">
